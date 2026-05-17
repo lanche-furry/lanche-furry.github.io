@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>澜澈 - Windows 2000 风格个人页</title>
+  <style>
+    /* 全局复古风格与字体 */
+    body {
+      background-color: #008080;
+      margin: 0;
+      padding: 0;
+      font-family: 'Microsoft Sans Serif', 'SimSun', '宋体', 'Fixedsys', 'Terminal', monospace;
+      font-size: 12px;
+      color: #000000;
+      cursor: default;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* 主窗口 - 模拟经典Windows窗口 */
+    .window {
+      width: 550px;
+      background-color: #c0c0c0;
+      border: 2px solid;
+      border-color: #ffffff #808080 #808080 #ffffff;
+      box-shadow: 2px 2px 0px #000000;
+      padding: 2px;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: windowFadeIn 0.5s ease-out forwards;
+    }
+
+    @keyframes windowFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 标题栏 */
+    .title-bar {
+      background: linear-gradient(90deg, #000080, #1084d0);
+      padding: 3px 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .title-bar-text {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: 2px;
+    }
+
+    .title-bar-buttons {
+      display: flex;
+      gap: 2px;
+      margin-right: 2px;
+    }
+
+    .title-bar-button {
+      background-color: #c0c0c0;
+      border: 2px solid;
+      border-color: #ffffff #808080 #808080 #ffffff;
+      width: 16px;
+      height: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+      color: black;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0;
+    }
+
+    /* 菜单栏 */
+    .menu-bar {
+      background-color: #c0c0c0;
+      padding: 4px 8px;
+      border-bottom: 1px solid #808080;
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+    }
+
+    .menu-item {
+      cursor: pointer;
+      padding: 2px 4px;
+    }
+
+    .menu-item:hover {
+      background-color: #000080;
+      color: white;
+    }
+
+    /* 内容区域 */
+    .content-area {
+      padding: 16px;
+      background-color: #ffffff;
+      border: 2px solid;
+      border-color: #808080 #ffffff #ffffff #808080;
+      margin: 8px;
+    }
+
+    /* 图标和文本样式 */
+    .profile-section {
+      display: flex;
+      align-items: start;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .profile-icon {
+      width: 64px;
+      height: 64px;
+      background-color: #c0c0c0;
+      border: 2px solid;
+      border-color: #ffffff #808080 #808080 #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .profile-icon img {
+      width: 64px;
+      height: 64px;
+      display: block;
+    }
+
+    .profile-text h2 {
+      margin: 0 0 4px 0;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .profile-text p {
+      margin: 4px 0;
+    }
+
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0;
+    }
+
+    .contact-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .contact-icon {
+      width: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    a {
+      color: #0000ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* 云盘入口按钮 */
+    .cloud-entry {
+      margin-top: 16px;
+      padding: 12px;
+      background-color: #f0f0f0;
+      border: 2px solid;
+      border-color: #ffffff #808080 #808080 #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      color: #000;
+    }
+
+    .cloud-entry:hover {
+      background-color: #e0e0e0;
+      text-decoration: none;
+    }
+
+    .cloud-entry:active {
+      border-color: #808080 #ffffff #ffffff #808080;
+    }
+
+    .cloud-entry-icon {
+      width: 48px;
+      height: 48px;
+      background-color: #c0c0c0;
+      border: 2px solid;
+      border-color: #ffffff #808080 #808080 #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .cloud-entry-text h4 {
+      margin: 0 0 4px 0;
+      font-size: 13px;
+      color: #000;
+    }
+
+    .cloud-entry-text p {
+      margin: 0;
+      font-size: 11px;
+      color: #555;
+    }
+
+    .cloud-entry-arrow {
+      margin-left: auto;
+      font-size: 18px;
+      color: #808080;
+    }
+
+    /* 状态栏 */
+    .status-bar {
+      background-color: #c0c0c0;
+      border-top: 2px solid #808080;
+      padding: 4px 8px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      margin-top: 2px;
+    }
+
+    hr {
+      border: 1px solid #808080;
+      border-bottom-color: #ffffff;
+      margin: 12px 0;
+    }
+
+    /* 按钮样式 */
+    .win-button {
+      background-color: #c0c0c0;
+      border: 2px solid;
+      border-color: #ffffff #808080 #808080 #ffffff;
+      padding: 4px 12px;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .win-button:active {
+      border-color: #808080 #ffffff #ffffff #808080;
+    }
+
+    /* 模拟插入符闪烁效果 */
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .cursor-blink {
+      animation: blink 1s step-end infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="window">
+    <!-- 标题栏 -->
+    <div class="title-bar">
+      <div class="title-bar-text">
+        <span>📁</span>
+        <span>澜澈的个人主页 - Windows 2000 Professional</span>
+      </div>
+      <div class="title-bar-buttons">
+        <div class="title-bar-button">─</div>
+        <div class="title-bar-button">□</div>
+        <div class="title-bar-button">✕</div>
+      </div>
+    </div>
+
+    <!-- 菜单栏 -->
+    <div class="menu-bar">
+      <span class="menu-item">文件(F)</span>
+      <span class="menu-item">编辑(E)</span>
+      <span class="menu-item">查看(V)</span>
+      <span class="menu-item">收藏(A)</span>
+      <span class="menu-item">帮助(H)</span>
+    </div>
+
+    <!-- 主内容区域 -->
+    <div class="content-area">
+      <div class="profile-section">
+        <div class="profile-icon">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFBElEQVR4nO2ZTWhcVRTH//dj3iSZzCSTTBrb5oM0lHzWRlu0YoqVROxCcNeFILpxo0igCxcu3Cm4EqGgdiGCuBSlXahgoa0tLhRRM9ImhEAnJtEOTWiazEzexz0ukszMfZnMm5cmDjrvB28xf86999zz7jn3zn1AQEBAQEBAQEBAbcJ82gsAvAI7BcDx705ZGABZgR1tjk2VdFpJh1uIbDb7Bee8XxuNCI6jz9U0zRvxeHwCexiEVCr1XCKReJ+ItJcmpT4FxhjNzMy8PDg4mKykXz8B4JzzfsMwjheLjuNACKEZWtls7rWLl0ZvNh/xDoDtLY5baVjp9FOhgwdH3JbuAACAZVmNnuNuta/U0A8ym3myo+/Y1Wh9t7exUvpvoo2niDZrHq324h56WKCSfP5fsy8rAACIFEgVZwADGANj3nWXSGmrgEiVsX44fAXAcRzYtp6f2cUFqOUlbWKKMYx1HUKvKNiaxPDJAgOkRLnNh4hwOmpjJFqw6aEoWC6HzK1kvi2BYBPQNDjsZwrb8BUApRSUK2edpXsw7v6F0GYhJCKYTc0YHU5gtMhu1VL4OJUDExLaDuXKdxDh8SaOl7rqi8QG5BYtUPI3yM1xbKVg2w5U/+A2P90vqRwPnQKMMYSEQEgWAuDwHd4wqY2neAW4AwBCqRXCGcClyAeAOQxCVbTVl6Xmi2DNB8BXChDRthpQCm7ZuH13BX8jnNfWCQAXOzfKwzCbI1xPm6DNWtFO6+hZWSmxg1TmTzl8BcC2bXCuL5rrIoHfwy0QRbpyCL/OKNzRHGY4mQih0T0i6f2tOgyXlxUuLxVqQbcijFADWHggXx2UJDC+jol/MwCluM1juCQjYHx7NrnfV08DcCBc/hyQNgm/PNBXSkrEkEJMNyRCPTKY2I3TRdR8Daj5APhJAeKcr1pKZUzFGrZEC9z/rcJewTjW7MJZwOCUEYATCoWsirvwOaTR99GV0djwqStbzZmQgBBgrgPNK4cYzrTo3X84B8yvu3p0FbHDYYaJbr3dtSXCZwvbT4ykFMg284eplckfx6befP4mAAsblzKe+C2CpmhtN7lRV1AYSt69PGIAAxF9IjmHkDZdhi43WyRhIKJn5tRaiQGIwBgDk0Zeqms9bAJwh7gsu9sFSuzHVaOCf5flqPkiWPMB2JMLkdx3P2Htwlea9tbmU0zTB29AHu3QRdcB6o/kPI6OX/AcM/L6i6g7+4Qu7mI2Nb8CggBU24Fq4z9rUmnY9rwmxax1dA61a9qDLCFnurZHI+TtUEiitaNN0+oMhmi9vt3dt01kZnQ/rD/Tnv1vG89vg9V3P4cZ0h189txxvP3lq5p2bTKHW3P63dzV9jjue/Tf1B7HmfPnNG2gU+KZY3Wa9t473+Lr899ommn5D0DNp0AQgGo7UG1814CzLzyKtgOdmvbYiQ4YhqFpkShHtFn/NjqWEHDqURaRFWhYibj6EjAM3dVTT/ciHA5rWnp5Dhc/rWQWBXz/k0gmk6NDQ0M/eNn9nAJm7+naeB/Q0lDafoulDPD9lK4daQVOdnn7Nj09fbqvr++Gt2WBmk+BIADVdqDa7Nvn8e4WIO7K94hR2tZtc0KvsYjVlbbdC/YtAG2NG49fwhLoTey9PztR8ykQBMBvAyllFW9AyyOE8O2b7xowOzs7KaUcdRynWp9DSiKEoOnp6clq+xEQEBAQEBAQEBAQ8N/gH7TDlRiyqZuoAAAAAElFTkSuQmCC" alt="澜澈的头像">
+        </div>
+        <div class="profile-text">
+          <h2>你好，我是澜澈。</h2>
+          <p>喜欢编程的福瑞控，软硬件全不能工程师，苦逼服务器运维。</p>
+          <p style="font-style: italic; color: #555;">C:\Users\LanChe&gt; <span class="cursor-blink">_</span></p>
+        </div>
+      </div>
+
+      <!-- 云盘入口 -->
+      <a href="https://lanche-furry.github.io/cloud/" class="cloud-entry">
+        <div class="cloud-entry-icon">
+          <svg width="28" height="28" viewBox="0 0 32 32">
+            <rect x="2" y="12" width="28" height="14" fill="#c0c0c0" stroke="#808080" stroke-width="1"/>
+            <rect x="10" y="8" width="12" height="6" fill="#c0c0c0" stroke="#808080" stroke-width="1"/>
+            <rect x="6" y="4" width="20" height="5" fill="#c0c0c0" stroke="#808080" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="cloud-entry-text">
+          <h4>公共云盘</h4>
+          <p>5GB 共享存储空间 · 在线预览 · 文件分享</p>
+        </div>
+        <span class="cloud-entry-arrow">&gt;</span>
+      </a>
+
+      <hr>
+
+      <h3 style="margin-top: 0; font-size: 13px;">📧 联系方式</h3>
+      <ul class="contact-list">
+        <li>
+          <span class="contact-icon">✉️</span>
+          <span>Email：</span>
+          <a href="mailto:3671154055@qq.com">3671154055@qq.com</a>
+        </li>
+        <li>
+          <span class="contact-icon">🐙</span>
+          <span>GitHub：</span>
+          <a href="https://github.com/lanche-furry" target="_blank">github.com/lanche-furry</a>
+        </li>
+        <li>
+          <span class="contact-icon">💬</span>
+          <span>QQ：</span>
+          <span>3671154055</span>
+        </li>
+        <li>
+          <span class="contact-icon">📺</span>
+          <span>BiliBili：</span>
+          <a href="https://space.bilibili.com/3494359158753483/" target="_blank">空间链接</a>
+        </li>
+      </ul>
+
+      <div style="margin-top: 16px; display: flex; gap: 8px;">
+        <button class="win-button" onclick="alert('澜澈说：你好！🐾')">打招呼</button>
+        <button class="win-button" onclick="window.open('https://space.bilibili.com/3494359158753483/')">访问B站空间</button>
+      </div>
+    </div>
+
+    <!-- 状态栏 -->
+    <div class="status-bar">
+      <span>就绪</span>
+      <span>2026-05-16 | 系统在线</span>
+      <span>NUM</span>
+    </div>
+  </div>
+
+  <script>
+    // 菜单点击事件
+    document.querySelectorAll('.menu-item').forEach(item => {
+      item.addEventListener('click', function() {
+        alert('这是复古风格装饰菜单，暂无实际功能。');
+      });
+    });
+    
+    // 右上角按钮事件
+    document.querySelectorAll('.title-bar-button').forEach((btn, index) => {
+      btn.addEventListener('click', function() {
+        if (index === 2) {
+          alert('无法关闭，这是网页模拟的窗口 :)');
+        } else {
+          alert('窗口控制按钮（模拟）');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
